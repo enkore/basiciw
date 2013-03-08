@@ -129,6 +129,7 @@ static PyObject *
 iwinfo(PyObject *self, PyObject *args)
 {
     char *iface;
+    int quality, quality_max, quality_avg;
 
     if (!PyArg_ParseTuple(args, "s", &iface)) {
         PyErr_SetString(PyExc_TypeError, "Need interface name");
@@ -150,13 +151,33 @@ iwinfo(PyObject *self, PyObject *args)
         return NULL;
     }
 
+    iwqual iq = wi.stats.qual;
+    iwrange ir = wi.range;
+
+    if((iq.level != 0 || (iq.updated & (IW_QUAL_DBM | IW_QUAL_RCPI))) &&
+        !(iq.updated & IW_QUAL_QUAL_INVALID)) {
+        quality = iq.qual;
+        quality_max = ir.max_qual.qual;
+        quality_avg = ir.avg_qual.qual;
+        printf("pribranch: %i/%i (avg: %i)\n", quality, quality_max, quality_avg);
+    } else if(!(iq.updated & IW_QUAL_QUAL_INVALID)) {
+        quality = iq.qual;
+        printf("secbranch: %i\n", quality);
+    }
+
     iwc_shutdown();
 
-    return Py_BuildValue("{s:s,s:s,s:f,s:d}",
+    PyObject *quality_info = Py_BuildValue("{s:i,s:i,s:i}",
+        "quality", quality,
+        "quality_max", quality_max,
+        "quality_info", quality_info
+    );
+
+    return Py_BuildValue("{s:s,s:s,s:f,s:O}",
         "iface", iface,
         "essid", wc.essid,
         "freq", wc.freq,
-        "avg_quality", wi.range.avg_qual.qual
+        "quality", quality_info
     );
 }
 
