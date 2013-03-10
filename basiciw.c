@@ -159,10 +159,8 @@ iwinfo(PyObject *self, PyObject *args)
         quality = iq.qual;
         quality_max = ir.max_qual.qual;
         quality_avg = ir.avg_qual.qual;
-        printf("pribranch: %i/%i (avg: %i)\n", quality, quality_max, quality_avg);
     } else if(!(iq.updated & IW_QUAL_QUAL_INVALID)) {
         quality = iq.qual;
-        printf("secbranch: %i\n", quality);
     }
 
     iwc_shutdown();

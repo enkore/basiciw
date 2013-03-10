@@ -7,7 +7,7 @@ except ImportError:
 
 
 setup(name = "basiciw",
-      version = "0.2",
+      version = "0.2.1",
       description = "Get wireless info of interface.",
       author = "enkore",
       author_email = "public@enkore.de",
