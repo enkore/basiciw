@@ -7,7 +7,7 @@ except ImportError:
 
 
 setup(name = "basiciw",
-      version = "0.2.1",
+      version = "0.2.2",
       description = "Get wireless info of interface.",
       author = "enkore",
       author_email = "public@enkore.de",
@@ -22,5 +22,5 @@ setup(name = "basiciw",
           "Programming Language :: Python",
           "Topic :: System :: Networking"],
       ext_modules = [
-          Extension("basiciw", sources=["basiciw.c"], libraries=["iw"])
+          Extension("basiciw", sources=["basiciw.c"], libraries=["iw"], extra_compile_args=['-Wno-declaration-after-statement'])
       ])
