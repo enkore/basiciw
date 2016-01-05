@@ -15,7 +15,7 @@ setup(name = "basiciw",
       url = "http://github.com/enkore/basiciw/",
       platforms = "Linux",
       classifiers = [
-          "License :: OSI Approved :: GNU General Public License (GPL)",
+          "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
           "Development Status :: 3 - Alpha",
           "Operating System :: POSIX :: Linux",
           "Programming Language :: C",
