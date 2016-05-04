@@ -188,6 +188,7 @@ static struct PyMethodDef basiciw_methods[] = {
     {NULL, NULL, 0, NULL}
 };
 
+#if PY_MAJOR_VERSION >= 3
 static struct PyModuleDef moduledef = {
     PyModuleDef_HEAD_INIT,
     "basiciw",
@@ -199,10 +200,22 @@ static struct PyModuleDef moduledef = {
     NULL,
     NULL
 };
+#endif
 
+
+#if PY_MAJOR_VERSION >= 3
 PyObject *
 PyInit_basiciw(void)
+#else
+void
+initbasiciw(void)
+#endif
 {
+#if PY_MAJOR_VERSION >= 3
     PyObject *module = PyModule_Create(&moduledef);
     return module;
+#else
+    PyObject *module = Py_InitModule("basiciw", basiciw_methods);
+#endif
+
 }
